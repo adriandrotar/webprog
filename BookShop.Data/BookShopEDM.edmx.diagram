@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8dc2934da67d4b92ad85880d2863e303" Name="Diagram1">
+        <EntityTypeShape EntityType="BookShopDBModel.AUTHOR" Width="1.5" PointX="0.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookShopDBModel.BOOK" Width="1.5" PointX="3.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookShopDBModel.CUSTOMER" Width="1.5" PointX="8.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookShopDBModel.GENRE" Width="1.5" PointX="0.875" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookShopDBModel.ORDERS" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookShopDBModel.PUBLISHER" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="BookShopDBModel.BOOK_FOREIGN_KEY_AUT" ManuallyRouted="false" />
+        <AssociationConnector Association="BookShopDBModel.BOOK_FOREIGN_KEY_GEN" ManuallyRouted="false" />
+        <AssociationConnector Association="BookShopDBModel.BOOK_FOREIGN_KEY_PUB" ManuallyRouted="false" />
+        <AssociationConnector Association="BookShopDBModel.ORDERS_FOREIGN_KEY_BOO" ManuallyRouted="false" />
+        <AssociationConnector Association="BookShopDBModel.ORDERS_FOREIGN_KEY_CUS" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

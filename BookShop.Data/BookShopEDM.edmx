@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookShopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AUTHOR">
+          <Key>
+            <PropertyRef Name="AUTHORID" />
+          </Key>
+          <Property Name="AUTHORID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="BOOKID" />
+          </Key>
+          <Property Name="BOOKID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TITLE" Type="varchar" MaxLength="50" />
+          <Property Name="AUTHORID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PUBLISHERID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="GENREID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar" MaxLength="50" />
+          <Property Name="RATING" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="PRICE" Type="numeric" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTOMERID" />
+          </Key>
+          <Property Name="CUSTOMERID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="30" />
+          <Property Name="CITY" Type="varchar" MaxLength="30" />
+          <Property Name="ADDRESS" Type="varchar" MaxLength="30" />
+          <Property Name="PHONE" Type="varchar" MaxLength="30" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="GENRE">
+          <Key>
+            <PropertyRef Name="GENREID" />
+          </Key>
+          <Property Name="GENREID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" />
+          <Property Name="GENREDESCRIPTION" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ORDERSID" />
+          </Key>
+          <Property Name="ORDERSID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CUSTOMERID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="SHOP" Type="varchar" MaxLength="20" />
+          <Property Name="BOOKID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PURCHASEDATE" Type="varchar" MaxLength="200" />
+          <Property Name="COMMENTS" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PUBLISHER">
+          <Key>
+            <PropertyRef Name="PUBLISHERID" />
+          </Key>
+          <Property Name="PUBLISHERID" Type="numeric" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="BOOK_FOREIGN_KEY_AUT">
+          <End Role="AUTHOR" Type="Self.AUTHOR" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTHOR">
+              <PropertyRef Name="AUTHORID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="AUTHORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BOOK_FOREIGN_KEY_GEN">
+          <End Role="GENRE" Type="Self.GENRE" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GENRE">
+              <PropertyRef Name="GENREID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="GENREID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BOOK_FOREIGN_KEY_PUB">
+          <End Role="PUBLISHER" Type="Self.PUBLISHER" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLISHER">
+              <PropertyRef Name="PUBLISHERID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="PUBLISHERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FOREIGN_KEY_BOO">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="BOOKID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="BOOKID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FOREIGN_KEY_CUS">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUSTOMERID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CUSTOMERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookShopDBModelStoreContainer">
+          <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BOOK" EntityType="Self.BOOK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GENRE" EntityType="Self.GENRE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PUBLISHER" EntityType="Self.PUBLISHER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="BOOK_FOREIGN_KEY_AUT" Association="Self.BOOK_FOREIGN_KEY_AUT">
+            <End Role="AUTHOR" EntitySet="AUTHOR" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="BOOK_FOREIGN_KEY_GEN" Association="Self.BOOK_FOREIGN_KEY_GEN">
+            <End Role="GENRE" EntitySet="GENRE" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="BOOK_FOREIGN_KEY_PUB" Association="Self.BOOK_FOREIGN_KEY_PUB">
+            <End Role="PUBLISHER" EntitySet="PUBLISHER" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FOREIGN_KEY_BOO" Association="Self.ORDERS_FOREIGN_KEY_BOO">
+            <End Role="BOOK" EntitySet="BOOK" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FOREIGN_KEY_CUS" Association="Self.ORDERS_FOREIGN_KEY_CUS">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AUTHOR">
+          <Key>
+            <PropertyRef Name="AUTHORID" />
+          </Key>
+          <Property Name="AUTHORID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.BOOK_FOREIGN_KEY_AUT" FromRole="AUTHOR" ToRole="BOOK" />
+        </EntityType>
+        <EntityType Name="BOOK">
+          <Key>
+            <PropertyRef Name="BOOKID" />
+          </Key>
+          <Property Name="BOOKID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="TITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AUTHORID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PUBLISHERID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="GENREID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RATING" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="PRICE" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="AUTHOR" Relationship="Self.BOOK_FOREIGN_KEY_AUT" FromRole="BOOK" ToRole="AUTHOR" />
+          <NavigationProperty Name="GENRE" Relationship="Self.BOOK_FOREIGN_KEY_GEN" FromRole="BOOK" ToRole="GENRE" />
+          <NavigationProperty Name="PUBLISHER" Relationship="Self.BOOK_FOREIGN_KEY_PUB" FromRole="BOOK" ToRole="PUBLISHER" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.ORDERS_FOREIGN_KEY_BOO" FromRole="BOOK" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CUSTOMERID" />
+          </Key>
+          <Property Name="CUSTOMERID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CITY" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PHONE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ORDERS" Relationship="Self.ORDERS_FOREIGN_KEY_CUS" FromRole="CUSTOMER" ToRole="ORDERS" />
+        </EntityType>
+        <EntityType Name="GENRE">
+          <Key>
+            <PropertyRef Name="GENREID" />
+          </Key>
+          <Property Name="GENREID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GENREDESCRIPTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.BOOK_FOREIGN_KEY_GEN" FromRole="GENRE" ToRole="BOOK" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="ORDERSID" />
+          </Key>
+          <Property Name="ORDERSID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="CUSTOMERID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="SHOP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BOOKID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="PURCHASEDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COMMENTS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.ORDERS_FOREIGN_KEY_BOO" FromRole="ORDERS" ToRole="BOOK" />
+          <NavigationProperty Name="CUSTOMER" Relationship="Self.ORDERS_FOREIGN_KEY_CUS" FromRole="ORDERS" ToRole="CUSTOMER" />
+        </EntityType>
+        <EntityType Name="PUBLISHER">
+          <Key>
+            <PropertyRef Name="PUBLISHERID" />
+          </Key>
+          <Property Name="PUBLISHERID" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="COUNTRY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOOK" Relationship="Self.BOOK_FOREIGN_KEY_PUB" FromRole="PUBLISHER" ToRole="BOOK" />
+        </EntityType>
+        <Association Name="BOOK_FOREIGN_KEY_AUT">
+          <End Role="AUTHOR" Type="Self.AUTHOR" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTHOR">
+              <PropertyRef Name="AUTHORID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="AUTHORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BOOK_FOREIGN_KEY_GEN">
+          <End Role="GENRE" Type="Self.GENRE" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GENRE">
+              <PropertyRef Name="GENREID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="GENREID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BOOK_FOREIGN_KEY_PUB">
+          <End Role="PUBLISHER" Type="Self.PUBLISHER" Multiplicity="1" />
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PUBLISHER">
+              <PropertyRef Name="PUBLISHERID" />
+            </Principal>
+            <Dependent Role="BOOK">
+              <PropertyRef Name="PUBLISHERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FOREIGN_KEY_BOO">
+          <End Role="BOOK" Type="Self.BOOK" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOOK">
+              <PropertyRef Name="BOOKID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="BOOKID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ORDERS_FOREIGN_KEY_CUS">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CUSTOMERID" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="CUSTOMERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookShopDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AUTHOR" EntityType="Self.AUTHOR" />
+          <EntitySet Name="BOOK" EntityType="Self.BOOK" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" />
+          <EntitySet Name="GENRE" EntityType="Self.GENRE" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" />
+          <EntitySet Name="PUBLISHER" EntityType="Self.PUBLISHER" />
+          <AssociationSet Name="BOOK_FOREIGN_KEY_AUT" Association="Self.BOOK_FOREIGN_KEY_AUT">
+            <End Role="AUTHOR" EntitySet="AUTHOR" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="BOOK_FOREIGN_KEY_GEN" Association="Self.BOOK_FOREIGN_KEY_GEN">
+            <End Role="GENRE" EntitySet="GENRE" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="BOOK_FOREIGN_KEY_PUB" Association="Self.BOOK_FOREIGN_KEY_PUB">
+            <End Role="PUBLISHER" EntitySet="PUBLISHER" />
+            <End Role="BOOK" EntitySet="BOOK" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FOREIGN_KEY_BOO" Association="Self.ORDERS_FOREIGN_KEY_BOO">
+            <End Role="BOOK" EntitySet="BOOK" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="ORDERS_FOREIGN_KEY_CUS" Association="Self.ORDERS_FOREIGN_KEY_CUS">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookShopDBModelStoreContainer" CdmEntityContainer="BookShopDBEntities">
+          <EntitySetMapping Name="AUTHOR">
+            <EntityTypeMapping TypeName="BookShopDBModel.AUTHOR">
+              <MappingFragment StoreEntitySet="AUTHOR">
+                <ScalarProperty Name="AUTHORID" ColumnName="AUTHORID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BOOK">
+            <EntityTypeMapping TypeName="BookShopDBModel.BOOK">
+              <MappingFragment StoreEntitySet="BOOK">
+                <ScalarProperty Name="BOOKID" ColumnName="BOOKID" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="AUTHORID" ColumnName="AUTHORID" />
+                <ScalarProperty Name="PUBLISHERID" ColumnName="PUBLISHERID" />
+                <ScalarProperty Name="GENREID" ColumnName="GENREID" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="RATING" ColumnName="RATING" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER">
+            <EntityTypeMapping TypeName="BookShopDBModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="CUSTOMERID" ColumnName="CUSTOMERID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="CITY" ColumnName="CITY" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GENRE">
+            <EntityTypeMapping TypeName="BookShopDBModel.GENRE">
+              <MappingFragment StoreEntitySet="GENRE">
+                <ScalarProperty Name="GENREID" ColumnName="GENREID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="GENREDESCRIPTION" ColumnName="GENREDESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="BookShopDBModel.ORDERS">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="ORDERSID" ColumnName="ORDERSID" />
+                <ScalarProperty Name="CUSTOMERID" ColumnName="CUSTOMERID" />
+                <ScalarProperty Name="SHOP" ColumnName="SHOP" />
+                <ScalarProperty Name="BOOKID" ColumnName="BOOKID" />
+                <ScalarProperty Name="PURCHASEDATE" ColumnName="PURCHASEDATE" />
+                <ScalarProperty Name="COMMENTS" ColumnName="COMMENTS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PUBLISHER">
+            <EntityTypeMapping TypeName="BookShopDBModel.PUBLISHER">
+              <MappingFragment StoreEntitySet="PUBLISHER">
+                <ScalarProperty Name="PUBLISHERID" ColumnName="PUBLISHERID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
